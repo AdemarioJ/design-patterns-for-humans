@@ -1601,54 +1601,56 @@ Here is the simplest example of a chat room (i.e. mediator) with users (i.e. col
 
 First of all, we have the mediator i.e. the chat room
 
-```php
-interface ChatRoomMediator 
+```JAVA
+public interface ChatRoomMediator 
 {
-    public function showMessage(User $user, string $message);
+	void showMessage(User user, String message);
 }
 
-// Mediator
-class ChatRoom implements ChatRoomMediator
+//Mediator
+public class ChatRoom implements ChatRoomMediator 
 {
-    public function showMessage(User $user, string $message)
-    {
-        $time = date('M d, y H:i');
-        $sender = $user->getName();
-
-        echo $time . '[' . $sender . ']:' . $message;
-    }
+	@Override
+	public void showMessage(User user, String message) {
+	     time = date('M d, y H:i');
+	     sender = user.getName();
+	     System.out.println( time + "[" + sender + "]:" + message;
+	}
 }
 ```
 
 Then we have our users i.e. colleagues
-```php
-class User {
-    protected $name;
-    protected $chatMediator;
+```JAVA
+public abstract class User 
+{
+	protected String name;
+	protected ChatRoomMediator chatMediator;
+	    
+	public construct(String name, ChatRoomMediator chatMediator) 
+	{
+		this.name = name;
+		this.chatMediator = chatMediator;
+	}
 
-    public function __construct(string $name, ChatRoomMediator $chatMediator) {
-        $this->name = $name;
-        $this->chatMediator = $chatMediator;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function send($message) {
-        $this->chatMediator->showMessage($this, $message);
-    }
-}
+	public function getName()
+	{
+		return this.name;
+	}
+	public function send(message) 
+	{
+		this.chatMediator.showMessage(this, message);
+	}	
+}	
 ```
 And the usage
-```php
-$mediator = new ChatRoom();
+```JAVA
+mediator = new ChatRoom();
 
-$john = new User('John Doe', $mediator);
-$jane = new User('Jane Doe', $mediator);
+john = new User("John Doe", mediator);
+jane = new User("Jane Doe", mediator);
 
-$john->send('Hi there!');
-$jane->send('Hey!');
+john.send("Hi there!");
+jane.send("Hey!");
 
 // Output will be
 // Feb 14, 10:58 [John]: Hi there!
